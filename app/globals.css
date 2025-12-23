@@ -1,26 +1,204 @@
 @import "tailwindcss";
 
+/**
+ * Variables CSS pour les couleurs qui s'adaptent automatiquement
+ * Permet de changer facilement les couleurs via une classe sur le body
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-color: #7a6047; /* Couleur principale de fond */
+  --text-color: #2D0036; /* texte sombre pour lisibilité sur fond clair */
+  --header-gradient-start: rgba(242, 240, 236, 0.98); /* Fond beige clair avec transparence */
+  --header-gradient-end: rgba(242, 240, 236, 0.95); /* Fond beige clair avec transparence */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/**
+ * Règle CSS globale pour le body
+ * Utilise les variables CSS pour permettre des transitions fluides
+ */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/**
+ * Classe beige ajoutée par GSAP pour les sections avec fond beige (#e8dcca)
+ * Quand cette classe est présente, le fond devient beige et le texte reste sombre pour le contraste
+ */
+body.dark-mode {
+  --bg-color: #e8dcca; /* beige/ivoire */
+  --text-color: #2D0036; /* texte sombre pour contraste sur fond beige */
+}
+
+/**
+ * Overlay de grain (noise) pour donner un aspect "papier" ou "film argentique"
+ * Effet très subtil qui fourmille légèrement pour créer une texture premium
+ * Z-index élevé pour être au-dessus de tout le contenu mais pointer-events: none pour rester cliquable
+ */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none; /* Permet de cliquer à travers - crucial pour l'interactivité */
+  opacity: 0.05; /* Très subtil */
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSBiYXNlRnJlcXVlbmN5PSIwLjkiIG51bU9jdGF2ZXM9IjQiIHJlc3VsdD0ibm9pc2UiLz48ZmVDb2xvck1hdHJpeCBpbj0ibm9pc2UiIHR5cGU9InNhdHVyYXRlIiB2YWx1ZXM9IjAiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjA1Ii8+PC9zdmc+');
+  background-size: 200px 200px;
+  animation: grain 0.2s steps(6) infinite;
+}
+
+/**
+ * Animation keyframe pour faire "fourmiller" le grain
+ * Déplace très rapidement le background pour créer un fourmillement vivant
+ * Animation rapide pour un effet de texture dynamique et premium
+ */
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -5%);
+  }
+  20% {
+    transform: translate(-10%, 5%);
+  }
+  30% {
+    transform: translate(5%, -10%);
+  }
+  40% {
+    transform: translate(-5%, 15%);
+  }
+  50% {
+    transform: translate(-10%, 5%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 10%);
+  }
+  80% {
+    transform: translate(-15%, 0%);
+  }
+  90% {
+    transform: translate(10%, 5%);
+  }
+  100% {
+    transform: translate(5%, 0%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/**
+ * Styles pour Lenis (smooth scroll)
+ * Assure une intégration optimale avec le smooth scroll
+ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/**
+ * Masquer la scrollbar du navigateur tout en gardant le scroll actif
+ * Lenis gère le scroll, donc on peut masquer la scrollbar native pour une immersion totale
+ */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Pour Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* Pour les anciens navigateurs */
+* {
+  -ms-overflow-style: none;
+}
+
+/* --- BENTO GALLERY STYLES --- */
+
+/* Le conteneur qui épingle l'écran */
+.gallery-wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #7a6047; /* Fond marron */
+}
+
+.gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: none;
+  display: grid;
+  gap: 1vh; /* Espacement entre les images */
+  /* État 1 : BENTO COMPACT (Au centre) - Images plus grandes pour meilleure qualité */
+  grid-template-columns: repeat(3, 35vw); 
+  grid-template-rows: repeat(4, 22vh);
+  justify-content: center;
+  align-content: center;
+}
+
+/* État 2 : FINAL (Explosion plein écran) */
+/* GSAP Flip va calculer la transition vers cet état */
+.gallery--final {
+  grid-template-columns: repeat(3, 100vw);
+  grid-template-rows: repeat(4, 100vh);
+  gap: 10vh;
+}
+
+.gallery__item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Ombre douce pour le luxe */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+}
+
+.gallery__item img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --- LOGIQUE DE POSITIONNEMENT BENTO --- */
+.gallery__item:nth-child(1) { grid-area: 1 / 1 / 3 / 2; }
+.gallery__item:nth-child(2) { grid-area: 1 / 2 / 2 / 3; }
+.gallery__item:nth-child(3) { grid-area: 2 / 2 / 4 / 3; }
+.gallery__item:nth-child(4) { grid-area: 1 / 3 / 3 / 3; }
+.gallery__item:nth-child(5) { grid-area: 3 / 1 / 3 / 2; }
+.gallery__item:nth-child(6) { grid-area: 3 / 3 / 5 / 4; }
+.gallery__item:nth-child(7) { grid-area: 4 / 1 / 5 / 2; }
+.gallery__item:nth-child(8) { grid-area: 4 / 2 / 5 / 3; }
+
+/**
+ * Classe utilitaire pour la navbar au scroll
+ * Réduit la hauteur et applique un effet de flou (glassmorphism) au lieu du fond violet
+ */
+.nav-scrolled {
+  height: 60px !important; /* Version réduite */
+  background: rgba(242, 240, 236, 0.8) !important; /* Fond beige clair avec transparence pour le glassmorphism */
 }
