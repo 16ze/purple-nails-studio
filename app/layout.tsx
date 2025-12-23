@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://purple-nails-studio.vercel.app",
+    url: "https://purple-nails-studio-1brr5rsw4-16zes-projects.vercel.app",
     title: "Purple Nails Studio | L'Art de la Manucure",
     description:
       "Découvrez l'excellence de la manucure russe et du nail art dans un cadre minimaliste et luxueux.",
