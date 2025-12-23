@@ -58,6 +58,16 @@ export default function Hero() {
           className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight font-bold px-8"
           style={{ fontFamily: "Bradfordll, Georgia, sans-serif" }}
         />
+        
+        {/* Bouton Prendre rendez-vous sans bordure */}
+        <a
+          href="https://www.planity.com/azurra-beaute-anama-25600-sochaux"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block mt-8 md:mt-12 px-8 py-4 text-white font-lato text-lg uppercase tracking-widest hover:opacity-80 transition-opacity duration-300"
+        >
+          Prendre rendez-vous
+        </a>
       </div>
     </section>
   );
