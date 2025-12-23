@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { SERVICES } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://purple-nails-studio-1brr5rsw4-16zes-projects.vercel.app";
+  const baseUrl = "https://purple-nails-studio.vercel.app";
 
   // Pages principales
   const routes: MetadataRoute.Sitemap = [

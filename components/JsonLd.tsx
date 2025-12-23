@@ -8,7 +8,7 @@ export default function JsonLd() {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
     name: "Purple Nails Studio",
-    image: "https://purple-nails-studio-1brr5rsw4-16zes-projects.vercel.app/opengraph-image.png",
+    image: "https://purple-nails-studio.vercel.app/opengraph-image.png",
     description:
       "Studio de manucure russe et nail art. Soins des ongles haut de gamme à Sochaux.",
     address: {
@@ -23,7 +23,7 @@ export default function JsonLd() {
       latitude: 47.5083, // Coordonnées approximatives de Sochaux
       longitude: 6.8314,
     },
-    url: "https://purple-nails-studio-1brr5rsw4-16zes-projects.vercel.app",
+    url: "https://purple-nails-studio.vercel.app",
     telephone: "+33783389817",
     openingHoursSpecification: [
       {
