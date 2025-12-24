@@ -116,12 +116,13 @@ export default function Preloader() {
   return (
     <div
       ref={container}
-      className="fixed inset-0 z-[99999] flex items-center justify-center w-screen h-screen"
+      className="fixed inset-0 z-[99999] flex items-center justify-center w-screen h-screen overflow-hidden"
       style={{ backgroundColor: "#E8DCCA" }} // Fond Beige demandé
     >
       <svg
         viewBox="0 0 800 400"
-        className="w-full max-w-[600px] overflow-visible"
+        className="w-full h-full max-w-[600px] max-h-[400px] px-4 md:px-0"
+        preserveAspectRatio="xMidYMid meet"
       >
         <defs>
           {/* Dégradés pour les formes géométriques */}
@@ -175,11 +176,16 @@ export default function Preloader() {
           {/* Le Texte Final qui apparaît au centre */}
           <text
             id="final-text"
+            x="0"
+            y="0"
             textAnchor="middle"
-            dominantBaseline="middle"
+            dominantBaseline="central"
             fill="#FFFFFF"
-            className="font-playfair font-bold text-6xl tracking-widest"
-            style={{ fontSize: "60px" }} // Fallback size
+            className="font-playfair font-bold tracking-widest"
+            style={{
+              fontSize: "clamp(32px, 8vw, 60px)",
+              fontFamily: "var(--font-playfair), serif",
+            }}
           >
             PURPLE NAILS.
           </text>
