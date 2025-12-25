@@ -14,10 +14,23 @@ export default function Preloader() {
   const [isHidden, setIsHidden] = useState(false);
 
   /**
-   * Bloque le scroll au chargement
+   * Bloque le scroll au chargement et s'assure que le preloader couvre tout l'écran
    */
   useEffect(() => {
+    // Bloque le scroll sur body et html
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    // Force la hauteur à 100vh pour éviter les problèmes de scroll
+    document.body.style.height = "100vh";
+    document.documentElement.style.height = "100vh";
+    
+    // Cleanup : restaure le scroll à la fin
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      document.body.style.height = "";
+      document.documentElement.style.height = "";
+    };
   }, []);
 
   /**
@@ -35,6 +48,9 @@ export default function Preloader() {
             onComplete: () => {
               setIsHidden(true);
               document.body.style.overflow = "";
+              document.documentElement.style.overflow = "";
+              document.body.style.height = "";
+              document.documentElement.style.height = "";
             },
           });
         },
@@ -116,8 +132,17 @@ export default function Preloader() {
   return (
     <div
       ref={container}
-      className="fixed inset-0 z-[99999] flex items-center justify-center w-screen h-screen overflow-hidden"
-      style={{ backgroundColor: "#E8DCCA" }} // Fond Beige demandé
+      className="fixed flex items-center justify-center overflow-hidden"
+      style={{
+        backgroundColor: "#E8DCCA", // Fond Beige demandé
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: "100vw",
+        height: "100vh",
+        zIndex: 99999,
+      }}
     >
       <svg
         viewBox="0 0 800 400"
