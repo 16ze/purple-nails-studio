@@ -3,7 +3,6 @@ import CustomCursor from "@/components/CustomCursor";
 import JsonLd from "@/components/JsonLd";
 import Navbar from "@/components/Navbar";
 import { PageTransitionProvider } from "@/components/PageTransition";
-import Preloader from "@/components/Preloader";
 import SmoothScroll from "@/components/SmoothScroll";
 import type { Metadata } from "next";
 import { Lato, Playfair_Display } from "next/font/google";
@@ -113,7 +112,6 @@ export default function RootLayout({
       >
         <JsonLd />
         <PageTransitionProvider>
-          <Preloader />
           <ColorChanger />
           <CustomCursor />
           <SmoothScroll>
